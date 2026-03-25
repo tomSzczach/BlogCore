@@ -44,7 +44,7 @@ public class BlogRepository
         }
 
         _context.Posts.Remove(post);
-        //_context.SaveChanges();
+        _context.SaveChanges();
     }
 
 }
