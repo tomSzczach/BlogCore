@@ -22,11 +22,20 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
+      - name: Static Analysis (Linting)
+        run: dotnet format --verify-no-changes
+
+      - name: Security Scan (Dependencies)
+        run: dotnet list package --vulnerable
+
       - name: Build solution
         run: dotnet build --no-restore --configuration Release
 
       - name: Run Functional Tests
         run: dotnet test --no-build --configuration Release --logger "trx;LogFileName=test_results.trx"
+
+      - name: Run Tests with Coverage
+        run: dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
       - name: Publish Application
         run: dotnet publish --configuration Release --output ./publish
