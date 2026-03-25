@@ -32,7 +32,16 @@ jobs:
         run: dotnet build --no-restore --configuration Release
 
       - name: Run Functional Tests
-        run: dotnet test --no-build --configuration Release --logger "trx;LogFileName=test_results.trx"
+        run: dotnet test --no-build --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory ./TestResults
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: ./TestResults/**/*.trx
+          if-no-files-found: error
+          retention-days: 14
 
       - name: Run Tests with Coverage
         run: dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
