@@ -52,7 +52,7 @@ namespace BlogCore.DAL.Tests
                 _respawner = await Respawner.CreateAsync(connection, new RespawnerOptions
                 {
                     DbAdapter = DbAdapter.Postgres,
-                    TablesToIgnore = [ new Table("__EFMigrationsHistory") ]
+                    TablesToIgnore = [new Table("__EFMigrationsHistory")]
                 });
             }
 
